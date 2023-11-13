@@ -7,6 +7,5 @@ export default {
   driver: 'mysql2',
   dbCredentials: {
     connectionString: env.DATABASE_URL
-  },
-  tablesFilter: ['mobility_*']
+  }
 } satisfies Config
