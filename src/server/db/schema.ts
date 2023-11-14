@@ -1,5 +1,5 @@
 import { relations, sql } from 'drizzle-orm'
-import { index, int, mysqlTable, primaryKey, text, timestamp, varchar } from 'drizzle-orm/mysql-core'
+import { bigint, index, int, mysqlEnum, mysqlTable, primaryKey, text, timestamp, varchar } from 'drizzle-orm/mysql-core'
 import { type AdapterAccount } from 'next-auth/adapters'
 
 // export const posts = mysqlTable(
@@ -84,5 +84,19 @@ export const verificationTokens = mysqlTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token)
+  })
+)
+
+export const unitEnum = mysqlEnum('unit', ['kgs', 'lbs'])
+
+export const units = mysqlTable(
+  'unit',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
+    userId: varchar('userId', { length: 255 }).notNull(),
+    value: unitEnum.default('lbs')
+  },
+  (unit) => ({
+    userIdIdx: index('userId_idx').on(unit.userId)
   })
 )
