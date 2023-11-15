@@ -1,6 +1,7 @@
 import { relations, sql } from 'drizzle-orm'
 import { bigint, index, int, mysqlEnum, mysqlTable, primaryKey, text, timestamp, varchar } from 'drizzle-orm/mysql-core'
 import { type AdapterAccount } from 'next-auth/adapters'
+import { createInsertSchema } from 'drizzle-zod'
 
 export const users = mysqlTable('user', {
   id: varchar('id', { length: 255 }).notNull().primaryKey(),
@@ -70,9 +71,9 @@ export const verificationTokens = mysqlTable(
   })
 )
 
-export const unit = ['kgs', 'lbs'] as const
+export const weightUnits = ['kgs', 'lbs'] as const
 
-export const unitEnum = mysqlEnum('unit', unit)
+export const unitEnum = mysqlEnum('unit', weightUnits)
 
 export const units = mysqlTable(
   'unit',
@@ -92,6 +93,7 @@ export const lifts = mysqlTable(
     id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
     userId: varchar('userId', { length: 255 }).notNull(),
     name: varchar('name', { length: 255 }).notNull(),
+    maxRep: bigint('maxRep', { mode: 'number' }),
     unit: unitEnum.default('lbs'),
     unitId: bigint('unitId', { mode: 'number' }).notNull()
   },
@@ -100,3 +102,5 @@ export const lifts = mysqlTable(
     unitIdIdx: index('unitId_idx').on(lift.unitId)
   })
 )
+
+export const insertLiftSchema = createInsertSchema(lifts)

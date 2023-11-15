@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { getServerAuthSession } from '~/server/auth'
 import { db } from '~/server/db'
-import { unit, units } from '~/server/db/schema'
+import { weightUnits, units } from '~/server/db/schema'
 
 export const updateUnit = async (formData: FormData) => {
   const session = await getServerAuthSession()
@@ -15,7 +15,7 @@ export const updateUnit = async (formData: FormData) => {
   if (!session) return
 
   const schema = z.object({
-    value: z.enum(unit)
+    value: z.enum(weightUnits)
   })
 
   const data = schema.parse({

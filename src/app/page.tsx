@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { getServerAuthSession } from '~/server/auth'
 import { ThemeSwitcher } from './_components/shared/theme-provider'
 import { Select } from './_components/shared/select'
-import { unit } from '~/server/db/schema'
+import { weightUnits } from '~/server/db/schema'
 import { updateUnit } from './actions/unit'
 
 const UpdateUnit = () => {
   return (
     <form action={updateUnit}>
       <Select defaultValue='lbs' name='value'>
-        {unit.map((unit) => (
+        {weightUnits.map((unit) => (
           <option key={unit} value={unit}>
             {unit}
           </option>
