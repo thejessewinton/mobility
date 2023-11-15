@@ -2,6 +2,25 @@ import Link from 'next/link'
 
 import { getServerAuthSession } from '~/server/auth'
 import { ThemeSwitcher } from './_components/shared/theme-provider'
+import { Select } from './_components/shared/select'
+import { unit } from '~/server/db/schema'
+import { updateUnit } from './actions/unit'
+
+const UpdateUnit = () => {
+  return (
+    <form action={updateUnit}>
+      <Select defaultValue='lbs' name='value'>
+        {unit.map((unit) => (
+          <option key={unit} value={unit}>
+            {unit}
+          </option>
+        ))}
+      </Select>
+
+      <button type='submit'>Submit</button>
+    </form>
+  )
+}
 
 export default async function Home() {
   const session = await getServerAuthSession()
@@ -14,6 +33,7 @@ export default async function Home() {
             <p className='text-center text-2xl text-white'>
               {session && <span>Logged in as {session.user?.name}</span>}
             </p>
+            <UpdateUnit />
             <ThemeSwitcher />
             <Link
               href={session ? '/api/auth/signout' : '/api/auth/signin'}

@@ -1,5 +1,5 @@
 import { type ComponentPropsWithRef } from 'react'
-import { classNames } from '~/app/utils/classnames'
+import { classNames } from '~/app/utils/utils'
 
 type SelectProps = ComponentPropsWithRef<'select'>
 
