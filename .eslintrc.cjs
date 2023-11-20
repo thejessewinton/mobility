@@ -8,7 +8,9 @@ const config = {
   extends: [
     'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:@typescript-eslint/stylistic-type-checked'
+    'plugin:@typescript-eslint/stylistic-type-checked',
+    'plugin:import/recommended',
+    'plugin:import/typescript'
   ],
   rules: {
     // These opinionated rules are enabled in stylistic-type-checked above.
@@ -28,6 +30,16 @@ const config = {
       2,
       {
         checksVoidReturn: { attributes: false }
+      }
+    ],
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal'],
+        pathGroups: [{ pattern: 'react', group: 'external', position: 'before' }],
+        pathGroupsExcludedImportTypes: ['react'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true }
       }
     ]
   }

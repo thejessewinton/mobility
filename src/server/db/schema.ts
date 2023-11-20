@@ -1,7 +1,7 @@
 import { relations, sql } from 'drizzle-orm'
 import { bigint, index, int, mysqlEnum, mysqlTable, primaryKey, text, timestamp, varchar } from 'drizzle-orm/mysql-core'
-import { type AdapterAccount } from 'next-auth/adapters'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { type AdapterAccount } from 'next-auth/adapters'
 
 export const users = mysqlTable('user', {
   id: varchar('id', { length: 255 }).notNull().primaryKey(),
@@ -100,12 +100,10 @@ export const lifts = mysqlTable(
     userId: varchar('userId', { length: 255 }).notNull(),
     name: varchar('name', { length: 255 }).notNull(),
     maxRep: bigint('maxRep', { mode: 'number' }),
-    unit: unitEnum.default('lbs'),
-    unitId: bigint('unitId', { mode: 'number' }).notNull()
+    unit: unitEnum.default('lbs')
   },
   (lift) => ({
-    userIdIdx: index('userId_idx').on(lift.userId),
-    unitIdIdx: index('unitId_idx').on(lift.unitId)
+    userIdIdx: index('userId_idx').on(lift.userId)
   })
 )
 
